@@ -5,26 +5,22 @@ function submit_data(data) {
   $(".submit").click();
 }
 
+var current_url = "";
+var current_id = -1;
 // 提交代码 + 读取设置
 function submit() {
-  // 获取设置的url和地址
-  let data = "";
-  chrome.storage.get(
+  chrome.storage.sync.get(
     {
       defaultContent: ""
     },
-    function(items) {
-      data = items.defaultContent;
-    }
-  );
-  console.log(data);
-  chrome.tabs.query(
-    { url: "http://codeforces.com/contest/*/challenge/*" },
-    tabs => {
+    items => {
+      console.log(items.defaultContent);
+      console.log(current_url);
+      console.log(current_id);
       // 提交数据
-      const now_url = tabs[0].url;
+      const now_url = current_url;
       console.log(now_url);
-      submit_data(data);
+      submit_data(items.defaultContent);
       // 切换回网站
       setTimeout(() => {
         tab.url = now_url;
@@ -36,8 +32,11 @@ function submit() {
 // 监听Chrome消息
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action == "submit") {
-    console.log("get message");
+    current_id = request.id;
+    current_url = request.url;
     submit();
-    sendResponse({ state: "提交成功！" });
+    sendResponse({
+      state: "提交成功！"
+    });
   }
 });

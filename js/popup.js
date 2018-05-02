@@ -23,7 +23,9 @@ function submit_data() {
         chrome.tabs.sendMessage(
           tab[0].id,
           {
-            action: "submit"
+            action: "submit",
+            url: tab[0].url,
+            id: tab[0].id // 发送消息
           },
           function(response) {
             // 通知用户
