@@ -1,7 +1,7 @@
 {
   "name": "SubmitLoop",
   "version": "0.1",
-  "description": "For Old K",
+  "description": "For Hack",
   "manifest_version": 2,
   "content_scripts": [
     {
