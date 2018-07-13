@@ -1,17 +1,20 @@
 // 将选项保存在 chrome.storage 中
 function save_options() {
   const content = document.getElementById("dataInput").value;
+  const url = document.getElementById("urlInput").value;
   chrome.storage.sync.set(
     {
       defaultContent: content
     },
-    function() {
+    function () {
       // 告诉用户选项已保存。
-      var status = document.getElementById("status");
+      let status = document.getElementById("status");
+      status.className = "success";
       status.textContent = "您的配置已经保存";
-      setTimeout(function() {
+      setTimeout(function () {
+        status.className = "";
         status.textContent = "";
-      }, 750);
+      }, 10000);
     }
   );
 }
@@ -21,12 +24,12 @@ function init_settings() {
     {
       defaultContent: ""
     },
-    function(items) {
+    function (items) {
       document.getElementById("dataInput").value = items.defaultContent;
     }
   );
 }
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   init_settings();
   document.getElementById("saveButton").addEventListener("click", save_options);
 });

@@ -24,13 +24,13 @@ function submit() {
       // 切换回网站
       setTimeout(() => {
         tab.url = now_url;
-      }, 500);
+      }, 10000);  // 等待十秒
     }
   );
 }
 
 // 监听Chrome消息
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action == "submit") {
     current_id = request.id;
     current_url = request.url;
